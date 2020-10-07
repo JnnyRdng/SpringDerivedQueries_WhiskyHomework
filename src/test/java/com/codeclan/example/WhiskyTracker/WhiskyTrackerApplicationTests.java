@@ -48,4 +48,10 @@ public class WhiskyTrackerApplicationTests {
 		assertEquals("The Glendronach Original", found.get(0).getName());
 	}
 
+	@Test
+	public void canFindAllWhiskiesFromAParticularRegion() {
+		List<Whisky> found = whiskyRepository.findByDistilleryRegion("Highland");
+		assertEquals(7, found.size());
+	}
+
 }
