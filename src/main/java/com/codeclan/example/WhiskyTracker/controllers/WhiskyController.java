@@ -18,7 +18,11 @@ public class WhiskyController {
     @GetMapping(value = "/whiskies")
     public ResponseEntity getAllWhiskies(@RequestParam(name = "year", required = false) Integer year,
                                          @RequestParam(name = "age", required = false) Integer age,
-                                         @RequestParam(name = "distillery_id", required = false) Long distillery_id) {
+                                         @RequestParam(name = "distillery_id", required = false) Long distillery_id,
+                                         @RequestParam(name = "region", required = false) String region) {
+        if (region != null) {
+            return new ResponseEntity(whiskyRepository.findByDistilleryRegion(region), HttpStatus.OK);
+        }
         if (distillery_id != null && age != null) {
             return new ResponseEntity(whiskyRepository.findWhiskyByDistilleryIdAndAge(distillery_id, age), HttpStatus.OK);
         }
