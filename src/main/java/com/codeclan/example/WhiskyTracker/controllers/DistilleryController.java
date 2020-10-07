@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,7 +16,10 @@ public class DistilleryController {
     private DistilleryRepository distilleryRepository;
 
     @GetMapping(value = "/distilleries")
-    public ResponseEntity getAllDistilleries() {
+    public ResponseEntity getAllDistilleries(@RequestParam(name = "region", required = false) String region) {
+        if (region != null) {
+            return new ResponseEntity(distilleryRepository.findDistilleryByRegionIgnoreCase(region), HttpStatus.OK);
+        }
         return new ResponseEntity(distilleryRepository.findAll(), HttpStatus.OK);
     }
 
